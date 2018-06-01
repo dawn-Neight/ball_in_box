@@ -45,16 +45,16 @@ def ball_in_box(m, blockers):
             for i in range(0,j):
                 if(math.sqrt((BalloonXPos[j]-BalloonXPos[i])**2+(BalloonYPos[j]-BalloonYPos[i])**2)-BalloonR[i]<r):
                     r=math.sqrt((BalloonXPos[j]-BalloonXPos[i])**2+(BalloonYPos[j]-BalloonYPos[i])**2)-BalloonR[i]
-            BalloonR[j]=r
+            BalloonR[j]=r                                  #得出上述距离中最短的定义为半径
             sum=sum+BalloonR[j]**2
-        if(sum>max):
-            for x in range(m):
+        if(sum>max):                                        #计算半径平方和，每次找到更大的更新记录，随机取点循环50000次，虽然可能找不到最大值
+            for x in range(m):                              #但是应该也十分接近    
                 mBalloonXPos[x]=BalloonXPos[x]
                 mBalloonYPos[x]=BalloonYPos[x]
                 mBalloonR[x]=BalloonR[x]  
             max=sum
         k=k+1
-    for circle_index in range(m):
+    for circle_index in range(m):                           #将找出的圆整合为一个圆的列表
 
         x = mBalloonXPos[circle_index]
         y = mBalloonYPos[circle_index]
@@ -62,4 +62,4 @@ def ball_in_box(m, blockers):
         circles.append((x, y, r))
         
     
-    return circles
+    return circles                                          #返回这个圆列表
