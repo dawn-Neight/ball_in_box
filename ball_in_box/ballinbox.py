@@ -8,21 +8,17 @@ def ball_in_box(m, blockers):
     k=0
     max=0
     circles = []
-    #circles is a list which is made up of the "coordinate"---(posX,posY,radius)
-    #initializing arrays whose length is changeable
-    BalloonR=[0]*int(m)
-    BalloonXPos=[0]*int(m)
+    BalloonR=[0]*int(m)                         #生成m个球的x，y，r的列表信息
+    BalloonXPos=[0]*int(m)                          
     BalloonYPos=[0]*int(m)
-    mBalloonR=[0]*int(m)
+    mBalloonR=[0]*int(m)                        #记录最大值得x，y，r的列表信息
     mBalloonXPos=[0]*int(m)
     mBalloonYPos=[0]*int(m)
-    while k<50000:
+    while k<50000:                              #随机生成点，循环5w次，找出最大点
         sum=0
-        
         BalloonR=[0]*int(m)
         for j in range(0,int(m)):
             r=0
-            #randomly appoint a number which ranges from -1 to 1
             BalloonXPos[j]=random.random()*2-1
             BalloonYPos[j]=random.random()*2-1
             i=0
