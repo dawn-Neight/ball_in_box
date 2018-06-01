@@ -8,6 +8,8 @@ def ball_in_box(m, blockers):
     k=0
     max=0
     circles = []
+    #circles is a list which is made up of the "coordinate"---(posX,posY,radius)
+    #initializing arrays whose length is changeable
     BalloonR=[0]*int(m)
     BalloonXPos=[0]*int(m)
     BalloonYPos=[0]*int(m)
