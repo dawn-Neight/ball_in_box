@@ -18,9 +18,11 @@ def ball_in_box(m, blockers):
     mBalloonYPos=[0]*int(m)
     while k<50000:
         sum=0
+        
         BalloonR=[0]*int(m)
         for j in range(0,int(m)):
             r=0
+            #randomly appoint a number which ranges from -1 to 1
             BalloonXPos[j]=random.random()*2-1
             BalloonYPos[j]=random.random()*2-1
             i=0
