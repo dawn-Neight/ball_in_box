@@ -6,7 +6,7 @@ def area_sum(circles):
     area = 0.0
     for circle in circles:
         area += circle[2]**2 * math.pi
-
+# ** is the same as pow( ,2)
     return area
 
 if __name__ == '__main__':
