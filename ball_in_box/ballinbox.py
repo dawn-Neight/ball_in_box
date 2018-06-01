@@ -34,7 +34,7 @@ def ball_in_box(m, blockers):
                     BalloonXPos[j]=random.random()*2-1
                     BalloonYPos[j]=random.random()*2-1
                     continue
-    
+    #use mathematical methods to judge whether the circles overlap
             r=math.fabs(1-BalloonXPos[j])
             if(math.fabs(1-BalloonYPos[j])<r):
                 r=math.fabs(1-BalloonYPos[j])
