@@ -9,4 +9,4 @@ A user can find the optimal value of r and mu which maximizes and sum r^2(or the
  1. A user can get a limited box bounded by [-1,1] by entering the numbers , position of small blocks and the number of balloons.
  2. A user can obtain the maximum balloon radius(r) and position(mu)  that do not overlap with these blocks.
  3. A user can view the sum of squares of the variable radius.
-
+ 4. A block can be viewed as a tiny point.
