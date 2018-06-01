@@ -8,13 +8,13 @@ def ball_in_box(m, blockers):
     k=0
     max=0
     circles = []
-    BalloonR=[0]*int(m)
+    BalloonR=[0]*int(m)                                     #生成m个球的x，y，r的列表信息
     BalloonXPos=[0]*int(m)
     BalloonYPos=[0]*int(m)
-    mBalloonR=[0]*int(m)
+    mBalloonR=[0]*int(m)                                    #记录最大球的x，y，r的列表信息
     mBalloonXPos=[0]*int(m)
     mBalloonYPos=[0]*int(m)
-    while k<50000:
+    while k<50000:                                          #随机生成点，循环5w次，找出最大点
         sum=0
         BalloonR=[0]*int(m)
         for j in range(0,int(m)):
