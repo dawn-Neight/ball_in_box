@@ -3,7 +3,7 @@ import random
 
 
 __all__ = ['ball_in_box']
-
+# m stands for the number of the balloons while blockers stands for the position of the barricades.
 def ball_in_box(m, blockers):
     k=0
     max=0
