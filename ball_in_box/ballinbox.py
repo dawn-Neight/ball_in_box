@@ -14,15 +14,15 @@ def ball_in_box(m, blockers):
     mBalloonR=[0]*int(m)                                    #记录最大球的x，y，r的列表信息
     mBalloonXPos=[0]*int(m)
     mBalloonYPos=[0]*int(m)
-    while k<50000:                                          #随机生成点，循环5w次，找出最大点
+    while k<50000:                                          #随机生成点，循环5w次，找出最大的半径平方和
         sum=0
-        BalloonR=[0]*int(m)
+        BalloonR=[0]*int(m)                                 
         for j in range(0,int(m)):
             r=0
             BalloonXPos[j]=random.random()*2-1
             BalloonYPos[j]=random.random()*2-1
             i=0
-            while(i<j):
+            while(i<j):                                    #第一次随机生成点，之后的点不能生成在第一个圆内，如果在圆内重新生成，知道在圆外
                 if(math.sqrt((BalloonXPos[j]-BalloonXPos[i])**2+(BalloonYPos[j]-BalloonYPos[i])**2)-BalloonR[i]>0):
                     i=i+1
                 else:
@@ -31,9 +31,9 @@ def ball_in_box(m, blockers):
                     BalloonYPos[j]=random.random()*2-1
                     continue
     
-            r=math.fabs(1-BalloonXPos[j])
-            if(math.fabs(1-BalloonYPos[j])<r):
-                r=math.fabs(1-BalloonYPos[j])
+            r=math.fabs(1-BalloonXPos[j])                  #找出圆半径的方法是寻找一个点能达到的最大半径，基本思路是：使一个圆膨胀，知道碰到界外
+            if(math.fabs(1-BalloonYPos[j])<r):              #或者其他障碍物或者圆，找出距离这些障碍物的最短的，就是能够达到的最大半径
+                r=math.fabs(1-BalloonYPos[j])               #进行m次，分别找出这些点的最大圆
             if(math.fabs(-1-BalloonXPos[j])<r):
                 r=math.fabs(-1-BalloonXPos[j])
             if(math.fabs(-1-BalloonYPos[j])<r):
