@@ -1,65 +1,56 @@
+import random 
 import math
-import random
+#blocks can be concentrated into points
+#the area of this problem is [-1,1],[-1,1]
 
-
-__all__ = ['ball_in_box']
 
 def ball_in_box(m, blockers):
-    k=0
-    max=0
-    circles = []
-    BalloonR=[0]*int(m)                                     #生成m个球的x，y，r的列表信息
-    BalloonXPos=[0]*int(m)
-    BalloonYPos=[0]*int(m)
-    mBalloonR=[0]*int(m)                                    #记录最大球的x，y，r的列表信息
-    mBalloonXPos=[0]*int(m)
-    mBalloonYPos=[0]*int(m)
-    while k<50000:                                          #随机生成点，循环5w次，找出最大的半径平方和
-        sum=0
-        BalloonR=[0]*int(m)                                 
-        for j in range(0,int(m)):
-            r=0
-            BalloonXPos[j]=random.random()*2-1
-            BalloonYPos[j]=random.random()*2-1
-            i=0
-            while(i<j):                                    #第一次随机生成点，之后的点不能生成在第一个圆内，如果在圆内重新生成，知道在圆外
-                if(math.sqrt((BalloonXPos[j]-BalloonXPos[i])**2+(BalloonYPos[j]-BalloonYPos[i])**2)-BalloonR[i]>0):
-                    i=i+1
-                else:
-                    i=0
-                    BalloonXPos[j]=random.random()*2-1
-                    BalloonYPos[j]=random.random()*2-1
-                    continue
-    
-            r=math.fabs(1-BalloonXPos[j])                  #找出圆半径的方法是寻找一个点能达到的最大半径，基本思路是：使一个圆膨胀，知道碰到界外
-            if(math.fabs(1-BalloonYPos[j])<r):              #或者其他障碍物或者圆，找出距离这些障碍物的最短的，就是能够达到的最大半径
-                r=math.fabs(1-BalloonYPos[j])               #进行m次，分别找出这些点的最大圆
-            if(math.fabs(-1-BalloonXPos[j])<r):
-                r=math.fabs(-1-BalloonXPos[j])
-            if(math.fabs(-1-BalloonYPos[j])<r):
-                r=math.fabs(-1-BalloonYPos[j])
-            if(math.sqrt((BalloonXPos[j]-0.5)**2+(BalloonYPos[j]-0.5)**2)<r):
-                r=math.sqrt((BalloonXPos[j]-0.5)**2+(BalloonYPos[j]-0.5)**2)
-            if(math.sqrt((BalloonXPos[j]-0.5)**2+(BalloonYPos[j]+0.3)**2)<r):
-                r=math.sqrt((BalloonXPos[j]-0.5)**2+(BalloonYPos[j]+0.3)**2)
+    BalloonXPos=[0]*m
+    BalloonYPos=[0]*m
+    BalloonR=[0]*m
+    r=0
+    def ifin(pos):
+        out=0
+        for i in range(0,5):
+            out=math.sqrt((pos[0]-BalloonXPos[i])**2+(pos[1]-BalloonYPos[i])**2)-BalloonR[i]>0
+            if(out==0):
+                break
+        return out
+    map=[(0,0)]*10000
+    point=len(map)
+    print(point)
+    for i in range(1,101):
+        for j in range(1,101):
+            map[(i-1)*100+j-1]=(0.02*j-1,0.02*i-1)
+    for j in range(0,m):
+        for k in range(0,point):
+            r=math.fabs(1-map[k][0])
+            if(math.fabs(1-map[k][1])<r):
+                r=math.fabs(1-map[k][1])
+            if(math.fabs(-1-map[k][0])<r):
+                r=math.fabs(-1-map[k][0])
+            if(math.fabs(-1-map[k][1])<r):
+                r=math.fabs(-1-map[k][1])
+            for b in range(0,len(blockers)):
+                if(math.sqrt((map[k][0]-blockers[b][0])**2+(map[k][1]-blockers[b][1])**2)<r):
+                    r=math.sqrt((map[k][0]-blockers[b][0])**2+(map[k][1]-blockers[b][1])**2)
             for i in range(0,j):
-                if(math.sqrt((BalloonXPos[j]-BalloonXPos[i])**2+(BalloonYPos[j]-BalloonYPos[i])**2)-BalloonR[i]<r):
-                    r=math.sqrt((BalloonXPos[j]-BalloonXPos[i])**2+(BalloonYPos[j]-BalloonYPos[i])**2)-BalloonR[i]
-            BalloonR[j]=r                                  #得出上述距离中最短的定义为半径
-            sum=sum+BalloonR[j]**2
-        if(sum>max):                                        #计算半径平方和，每次找到更大的更新记录，随机取点循环50000次，虽然可能找不到最大值
-            for x in range(m):                              #但是应该也十分接近    
-                mBalloonXPos[x]=BalloonXPos[x]
-                mBalloonYPos[x]=BalloonYPos[x]
-                mBalloonR[x]=BalloonR[x]  
-            max=sum
-        k=k+1
-    for circle_index in range(m):                           #将找出的圆整合为一个圆的列表
-
-        x = mBalloonXPos[circle_index]
-        y = mBalloonYPos[circle_index]
-        r = mBalloonR[circle_index]
+                if(math.sqrt((map[k][0]-BalloonXPos[i])**2+(map[k][1]-BalloonYPos[i])**2)-BalloonR[i]<r):
+                    r=math.sqrt((map[k][0]-BalloonXPos[i])**2+(map[k][1]-BalloonYPos[i])**2)-BalloonR[i]
+            if(r>BalloonR[j]):
+                BalloonR[j]=r
+                BalloonXPos[j]=map[k][0]
+                BalloonYPos[j]=map[k][1]
+        map=list(filter(ifin,map))
+        point=len(map)
+    circles = []
+    for circle_index in range(m):
+        x = BalloonXPos[circle_index]
+        y = BalloonYPos[circle_index]
+        r = BalloonR[circle_index]
         circles.append((x, y, r))
         
     
-    return circles                                          #返回这个圆列表
+    return circles
+
+
